@@ -12,7 +12,7 @@ class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         vector<vector<int>> ans;
-        sort(ans.begin(),ans.end());
+        sort(nums.begin(),nums.end());
         for(int i=0;i<nums.size()&&i<=0;i++){
             for (int j = i+1; j < nums.size(); ++j) {
                 auto target = find(nums.begin()+j+1,nums.end(),0-nums[i]-nums[j]);
@@ -26,7 +26,8 @@ public:
 
 int main()
 {
-    vector<int> a{0,0,0};
+    vector<int> a{-1,0,1,2,-1,-4};
+//    sort(a,a+ sizeof(a)/sizeof(int));
     Solution s{};
     s.threeSum(a);
     return 0;
