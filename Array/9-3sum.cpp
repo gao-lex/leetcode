@@ -10,24 +10,61 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> ans;
-        sort(nums.begin(),nums.end());
-        for(int i=0;i<nums.size()&&i<=0;i++){
-            for (int j = i+1; j < nums.size(); ++j) {
-                auto target = find(nums.begin()+j+1,nums.end(),0-nums[i]-nums[j]);
-                if(target!=nums.end()&&(target-nums.begin()>j))
-                    ans.push_back(vector<int> {nums[i],nums[j],*target});
+    vector<vector<int> > threeSum(vector<int> &num) {
+
+        vector<vector<int> > res;
+
+        std::sort(num.begin(), num.end());
+
+        for (int i = 0; i < num.size(); i++) {
+
+            int target = -num[i];
+            int front = i + 1;
+            int back = num.size() - 1;
+
+            while (front < back) {
+
+                int sum = num[front] + num[back];
+
+                // Finding answer which start from number num[i]
+                if (sum < target)
+                    front++;
+
+                else if (sum > target)
+                    back--;
+
+                else {
+                    vector<int> triplet(3, 0);
+                    triplet[0] = num[i];
+                    triplet[1] = num[front];
+                    triplet[2] = num[back];
+                    res.push_back(triplet);
+
+                    // Processing duplicates of Number 2
+                    // Rolling the front pointer to the next different number forwards
+                    while (front < back && num[front] == triplet[1]) front++;
+
+                    // Processing duplicates of Number 3
+                    // Rolling the back pointer to the next different number backwards
+                    while (front < back && num[back] == triplet[2]) back--;
+                }
+
             }
+
+            // Processing duplicates of Number 1
+            while (i + 1 < num.size() && num[i + 1] == num[i])
+                i++;
+
         }
-        return ans;
+
+        return res;
+
     }
 };
 
 int main()
 {
     vector<int> a{-1,0,1,2,-1,-4};
-//    sort(a,a+ sizeof(a)/sizeof(int));
     Solution s{};
     s.threeSum(a);
     return 0;
